@@ -10,14 +10,14 @@
 #include <string>
 using namespace std;
 
-struct StudentData //Á`¦@36­Óbyte
+struct StudentData //ç¸½å…±36å€‹byte
 {
    char studentId[ 8 ];
    char lastName[ 12 ];
    char firstName[ 12 ];
    int grade;
 };
-//////////////////////////////   2      3     4      5  //¬Ochoice°Ñ¼Æ¡A¨Ã«Dint
+//////////////////////////////   2      3     4      5  //æ˜¯choiceåƒæ•¸ï¼Œä¸¦éint
 enum class Choices{ PRINT = 1, UPDATE, NEW, DELETE, END };
                                
 // enable user to input menu choice
@@ -54,7 +54,7 @@ int main()
    Choices choice; // store user choice
 
    // enable user to specify action
-   while( ( choice = enterChoice() ) != Choices::END ) //¨Ï¥ÎªÌ¿é¤Jªº°Ñ¼Æ != Choices°Ñ¼Æªºend
+   while( ( choice = enterChoice() ) != Choices::END ) //ä½¿ç”¨è€…è¼¸å…¥çš„åƒæ•¸ != Choicesåƒæ•¸çš„end
    {
       switch( choice )
       {
@@ -75,8 +75,8 @@ int main()
          break;
       }
       ////////////////////////////////////////
-      //­n§ïposition (¶}©l¬°0¡Aµ²§ô¬°-1)
-      //??????????????¦pªGclear()¡Aseekg()·|ÅÜ¦h¤Ö????????????
+      //è¦æ”¹position (é–‹å§‹ç‚º0ï¼ŒçµæŸç‚º-1)
+      //??????????????å¦‚æœclear()ï¼Œseekg()æœƒè®Šå¤šå°‘????????????
       inOutGrade.clear(); 
       inOutGrade.seekg(0);
       inOutGrade.seekp(0);
@@ -103,19 +103,19 @@ Choices enterChoice()
 
    int menuChoice;
    cin >> menuChoice;
-   return static_cast< Choices >( menuChoice ); //±qÁä½L¿é¤Jint¡A¦AÂà¦¨choice°Ñ¼Æ
+   return static_cast< Choices >( menuChoice ); //å¾éµç›¤è¼¸å…¥intï¼Œå†è½‰æˆchoiceåƒæ•¸
 }
 
 // create text file for printing
-void createTextFile( fstream &readFromFile ) //(1)  //²£¥Í¤@­Ó¤å¦rÀÉgrade.txt¡A¨Ã¦b¿é¥Xµøµ¡¤]¦L¥X¨Ó 
-{                                                   //¨C§ó·s¤@­Ó¸ê®Æ¡A´N­n«Ø¥ß¤@¦¸                                             
+void createTextFile( fstream &readFromFile ) //(1)  //ç”¢ç”Ÿä¸€å€‹æ–‡å­—æª”grade.txtï¼Œä¸¦åœ¨è¼¸å‡ºè¦–çª—ä¹Ÿå°å‡ºä¾† 
+{                                                   //æ¯æ›´æ–°ä¸€å€‹è³‡æ–™ï¼Œå°±è¦å»ºç«‹ä¸€æ¬¡                                             
     ////////////////////////////////////////      
-    //Åªbinary file:
+    //è®€binary file:
     StudentData student;
-    //¤@¦¸¥ı±q¤G¤¸ÀÉÅª36­Óbyteµ¹student
+    //ä¸€æ¬¡å…ˆå¾äºŒå…ƒæª”è®€36å€‹byteçµ¦student
     readFromFile.read(reinterpret_cast<char*>(&student), sizeof(StudentData)); 
 
-    //«Ø¥ßtext file:
+    //å»ºç«‹text file:
     ofstream outFile("grades.txt", ios::out);
     if (!outFile)
     {
@@ -124,79 +124,79 @@ void createTextFile( fstream &readFromFile ) //(1)  //²£¥Í¤@­Ó¤å¦rÀÉgrade.txt¡A¨
         exit(1);
     }
 
-    while (!readFromFile.eof()) //end of file ¡AÅª¨ì³Ì«á¤@¦æªº¤U¤@¦æ(ªÅ¸ê®Æ)¡A¦^¶Çtrue
+    while (!readFromFile.eof()) //end of file ï¼Œè®€åˆ°æœ€å¾Œä¸€è¡Œçš„ä¸‹ä¸€è¡Œ(ç©ºè³‡æ–™)ï¼Œå›å‚³true
     {
-        if (student.studentId[0] != '\0') //¤£¬OªÅ¸ê°T¤~¦L¥X
+        if (student.studentId[0] != '\0') //ä¸æ˜¯ç©ºè³‡è¨Šæ‰å°å‡º
         {
-            //¦L¥X¤@¦ì¦P¾Ç
+            //å°å‡ºä¸€ä½åŒå­¸
             cout << setw(9) << left << student.studentId
                 << setw(12) << student.lastName
                 << setw(13) << student.firstName
                 << setw(5) << right << student.grade << endl;
-            //********  ¼g¤J¤@¦ì¦P¾Ç¶itext file    ************* 
+            //********  å¯«å…¥ä¸€ä½åŒå­¸é€²text file    ************* 
             outFile << left << setw(9) << student.studentId
                 << setw(12) << student.lastName
                 << setw(13) << student.firstName
                 << setw(5) << right << student.grade << endl;         
         }    
-        //©¹¤UÅª¤U¤@¦ì¦P¾Ç
+        //å¾€ä¸‹è®€ä¸‹ä¸€ä½åŒå­¸
         readFromFile.read(reinterpret_cast<char*>(&student), sizeof(StudentData));
     }
     
-    //Ãö³¬text file
+    //é—œé–‰text file
     outFile.close(); 
     ////////////////////////////////////////
 }
 
 // update grade in record
-void updateRecord( fstream &updateFile ) //(2)   //¦pªG¨S¤H Student ID 1111444 is empty. 
-{                                                //¦¨ÁZ¦pªG¬O-1¤]¤£¯à­×§ï Student ID 1111433 has no grade
-                                                 //­×§ï¦¨-1¦p¦P§â¦¨ÁZ§R±¼
+void updateRecord( fstream &updateFile ) //(2)   //å¦‚æœæ²’äºº Student ID 1111444 is empty. 
+{                                                //æˆç¸¾å¦‚æœæ˜¯-1ä¹Ÿä¸èƒ½ä¿®æ”¹ Student ID 1111433 has no grade
+                                                 //ä¿®æ”¹æˆ-1å¦‚åŒæŠŠæˆç¸¾åˆªæ‰
    char studentId[ 8 ];
    getID( "\nEnter student ID to update", studentId );
    ////////////////////////////////////////
    cout << endl;
 
-   //*****¯Z¯Å®y¸¹(²Ä´X­Ó¦P¾Ç)*****(¼Æ¦r¦r¤¸Âà¾ã¼Æ)
-   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0'); //¸ò0ªºASCII®t±o¨ì¾ã¼Æ
+   //*****ç­ç´šåº§è™Ÿ(ç¬¬å¹¾å€‹åŒå­¸)*****(æ•¸å­—å­—å…ƒè½‰æ•´æ•¸)
+   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0'); //è·Ÿ0çš„ASCIIå·®å¾—åˆ°æ•´æ•¸
 
-   //Åª¤@¦ì¦P¾Ç¸ê®ÆÀÉ:
+   //è®€ä¸€ä½åŒå­¸è³‡æ–™æª”:
    StudentData student; 
-   //*****³]Åªªº¦ì¸m*****(position±q0¶}©l¡A©Ò¥H-1)
+   //*****è¨­è®€çš„ä½ç½®*****(positionå¾0é–‹å§‹ï¼Œæ‰€ä»¥-1)
    updateFile.seekg((inClassId - 1) * sizeof(StudentData));
    updateFile.read(reinterpret_cast<char*>(&student), sizeof(StudentData));
 
-   //¸ê®Æ¤w¸g§R°£(ID¬OªÅ¦r¤¸):
+   //è³‡æ–™å·²ç¶“åˆªé™¤(IDæ˜¯ç©ºå­—å…ƒ):
    if (student.studentId[0] == '\0')
    {
        cout << "Student ID " << studentId << " is empty." << endl;
        return;
    }
-   //¦pªGÁÙ¨S¦³¦¨ÁZ:
+   //å¦‚æœé‚„æ²’æœ‰æˆç¸¾:
    if (student.grade == -1)
    {
        cout << "Student ID " << studentId << " has no grade." << endl;
        return;
    }
 
-   //¥ı¦L¥X­ì¥»ªº¸ê®Æ
+   //å…ˆå°å‡ºåŸæœ¬çš„è³‡æ–™
    cout << left << setw(9) << student.studentId
        << left << setw(12) << student.lastName
        << left << setw(13) << student.firstName
        << setw(5) << student.grade
        << endl << endl;
 
-   //¿é¤J¦¨ÁZ:
+   //è¼¸å…¥æˆç¸¾:
    cout << "Enter grade: ";
    cin >> student.grade;
    cout << endl;
 
-   //¼g¤@¦ì¦P¾Ç¸ê®ÆÀÉ ÂĞ»\ ­ì¥»¨º¦ì¦P¾Çªº¸ê®Æ:
-   //³]¸m¼g¤Jªº¦ì¸m
+   //å¯«ä¸€ä½åŒå­¸è³‡æ–™æª” è¦†è“‹ åŸæœ¬é‚£ä½åŒå­¸çš„è³‡æ–™:
+   //è¨­ç½®å¯«å…¥çš„ä½ç½®
    updateFile.seekp((inClassId - 1) * sizeof(StudentData));
    updateFile.write(reinterpret_cast<const char*>(&student), sizeof(StudentData));
 
-   //¦L¥X:
+   //å°å‡º:
    cout << left << setw(9) << student.studentId
        << left << setw(12) << student.lastName
        << left << setw(13) << student.firstName
@@ -208,39 +208,39 @@ void updateRecord( fstream &updateFile ) //(2)   //¦pªG¨S¤H Student ID 1111444 i
 }
 
 // add a new grade in record
-void newRecord( fstream &insertInFile ) //(3) //¦pªG¨S¤H Student ID 1111444 is empty. 
-{                                             //¥²¶·­ì¥»¨S¦³¦¨ÁZ(-1)
+void newRecord( fstream &insertInFile ) //(3) //å¦‚æœæ²’äºº Student ID 1111444 is empty. 
+{                                             //å¿…é ˆåŸæœ¬æ²’æœ‰æˆç¸¾(-1)
    char studentId[ 8 ];
    getID( "\nEnter student ID to add", studentId );
    //////////////////////////////////////// 
    cout << endl;
         
-   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0');//¸ò0ªºASCII®t±o¨ì¾ã¼Æ
+   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0');//è·Ÿ0çš„ASCIIå·®å¾—åˆ°æ•´æ•¸
 
-   //Åª¤@¦ì¦P¾Ç¸ê®ÆÀÉ:
-   //³]Åªªº¦ì¸m
+   //è®€ä¸€ä½åŒå­¸è³‡æ–™æª”:
+   //è¨­è®€çš„ä½ç½®
    StudentData student;
    insertInFile.seekg((inClassId - 1) * sizeof(StudentData));
    insertInFile.read(reinterpret_cast<char*>(&student), sizeof(StudentData));
 
-   //¸ê®Æ¤w¸g§R°£(ID¬OªÅ¦r¤¸):
+   //è³‡æ–™å·²ç¶“åˆªé™¤(IDæ˜¯ç©ºå­—å…ƒ):
    if (student.studentId[0] == '\0')
    {
        cout << "Student ID " << studentId << " is empty." << endl;
        return;
    }
 
-   //¿é¤J¦¨ÁZ:
+   //è¼¸å…¥æˆç¸¾:
    cout << "Enter grade: ";
    cin >> student.grade;
    cout << endl;
    
-   //¼g¤@¦ì¦P¾Ç¸ê®ÆÀÉ:
-   //³]¸m¼g¤Jªº¦ì¸m
+   //å¯«ä¸€ä½åŒå­¸è³‡æ–™æª”:
+   //è¨­ç½®å¯«å…¥çš„ä½ç½®
    insertInFile.seekp((inClassId - 1) * sizeof(StudentData));
    insertInFile.write(reinterpret_cast<const char*>(&student), sizeof(StudentData));
 
-   //¦L¥X:
+   //å°å‡º:
    cout << left << setw(9) << student.studentId
        << left << setw(12) << student.lastName
        << left << setw(13) << student.firstName
@@ -250,36 +250,36 @@ void newRecord( fstream &insertInFile ) //(3) //¦pªG¨S¤H Student ID 1111444 is e
 }
 
 // delete an existing record
-void deleteRecord( fstream &deleteFromFile ) //(4) //¦pªG¨S¤H Student ID 1111444 is empty.
+void deleteRecord( fstream &deleteFromFile ) //(4) //å¦‚æœæ²’äºº Student ID 1111444 is empty.
 {
    char studentId[ 8 ];
    getID( "\nEnter student ID to delete", studentId );
    ////////////////////////////////////////
    cout << endl;  
 
-   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0'); //¸ò0ªºASCII®t±o¨ì¾ã¼Æ
+   int inClassId = 10 * (studentId[5] - '0') + (studentId[6] - '0'); //è·Ÿ0çš„ASCIIå·®å¾—åˆ°æ•´æ•¸
 
-   //Åª¤@¦ì¦P¾Ç¸ê®ÆÀÉ:
-   //³]Åªªº¦ì¸m
+   //è®€ä¸€ä½åŒå­¸è³‡æ–™æª”:
+   //è¨­è®€çš„ä½ç½®
    StudentData student;
    deleteFromFile.seekg((inClassId - 1) * sizeof(StudentData)); 
    deleteFromFile.read(reinterpret_cast<char*>(&student), sizeof(StudentData));
 
-   //¸ê®Æ¤w¸g§R°£(ID¬OªÅ¦r¤¸):
+   //è³‡æ–™å·²ç¶“åˆªé™¤(IDæ˜¯ç©ºå­—å…ƒ):
    if (student.studentId[0] == '\0')
    {
        cout << "Student ID " << studentId << " is empty." << endl;
        return;
    } 
 
-   //²MªÅª«¥ó(¾Ç¥Í):  
+   //æ¸…ç©ºç‰©ä»¶(å­¸ç”Ÿ):  
    student.studentId[0] = '\0';
    student.lastName[0] = '\0';
    student.firstName[0] = '\0';
    student.grade = -1;
 
-   //¼g¤@¦ì¦P¾Ç¸ê®ÆÀÉ:
-   //³]¸m¼g¤Jªº¦ì¸m
+   //å¯«ä¸€ä½åŒå­¸è³‡æ–™æª”:
+   //è¨­ç½®å¯«å…¥çš„ä½ç½®
    deleteFromFile.seekp((inClassId - 1) * sizeof(StudentData));
    deleteFromFile.write(reinterpret_cast<const char*>(&student), sizeof(StudentData));
 
@@ -295,5 +295,5 @@ void getID( const char * const prompt, char studentId[] )
    {
       cout << prompt << " ( 1111401 - 1111450 ): ";
       cin >> studentId;
-   } while( strcmp( studentId, "1111401" ) == -1 || strcmp( studentId, "1111450" ) == 1 ); //¤p©ó³o­Ó½d³ò´N­«¨Ó
+   } while( strcmp( studentId, "1111401" ) == -1 || strcmp( studentId, "1111450" ) == 1 ); //å°æ–¼é€™å€‹ç¯„åœå°±é‡ä¾†
 }
