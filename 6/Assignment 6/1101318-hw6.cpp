@@ -143,7 +143,7 @@ bool equal( int *hugeInt1, int *hugeInt2, int size1, int size2 )
 }
 
 // returns true if and only if hugeInt1 < hugeInt2
-bool less( int *hugeInt1, int *hugeInt2, int size1, int size2 ) //§PÂ_²Ä¤@­Ó¼Æ¬O§_¤p©ó²Ä¤G­Ó¼Æ
+bool less( int *hugeInt1, int *hugeInt2, int size1, int size2 ) //åˆ¤æ–·ç¬¬ä¸€å€‹æ•¸æ˜¯å¦å°æ–¼ç¬¬äºŒå€‹æ•¸
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     if (size1 < size2)
@@ -156,7 +156,7 @@ bool less( int *hugeInt1, int *hugeInt2, int size1, int size2 ) //§PÂ_²Ä¤@­Ó¼Æ¬O
     }
     else if (size1 == size2)
     {
-        for (int i = size1 - 1; i >= 0; i--) //±q³Ì°ª¦ì¨Ó¤ñ¸û¤j¤p
+        for (int i = size1 - 1; i >= 0; i--) //å¾æœ€é«˜ä½ä¾†æ¯”è¼ƒå¤§å°
         {
             if (hugeInt1[i] > hugeInt2[i]) //hugeInt1 > hugeInt2
             {
@@ -173,30 +173,30 @@ bool less( int *hugeInt1, int *hugeInt2, int size1, int size2 ) //§PÂ_²Ä¤@­Ó¼Æ¬O
 }
 
 // --hugeInt
-void decrement( int *&hugeInt, int &size ) //ÃD¥Øªº¬A¸¹´î¤@
+void decrement( int *&hugeInt, int &size ) //é¡Œç›®çš„æ‹¬è™Ÿæ¸›ä¸€
 {
    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-   //¥Î¨Ó´î1ªºªÅ¶¡
+   //ç”¨ä¾†æ¸›1çš„ç©ºé–“
    int oneSize = 1;
-   int* one = new int[oneSize]();//()¥Nªí¨C­Ó¤¸¯À­È³£¬O0
+   int* one = new int[oneSize]();//()ä»£è¡¨æ¯å€‹å…ƒç´ å€¼éƒ½æ˜¯0
    one[0] = 1;
 
-   //hugeInt assign µ¹ buffer ¨Ó­pºâ´î1
+   //hugeInt assign çµ¦ buffer ä¾†è¨ˆç®—æ¸›1
    int bufferSize = size;
    int* buffer = new int[bufferSize]();
 
    assign(buffer, hugeInt, bufferSize, size); //buffer = hugeInt
    subtraAssign(buffer, one, bufferSize, oneSize);
 
-   //§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***
+   //åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***
    delete[] one;
 
    /////////////////////////////////////////////////////////////////////////////////////////////////////////
    if( bufferSize > 1 && buffer[ bufferSize - 1 ] == 0 )
       cout << "buffer has a leading zero!\n";
-   //­pºâ§¹ªºbuffer assignµ¹hugeInt
+   //è¨ˆç®—å®Œçš„buffer assignçµ¦hugeInt
    assign( hugeInt, buffer, size, bufferSize ); // hugeInt = buffer
-   //§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***
+   //åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***
    delete[] buffer;
 
 }
@@ -204,7 +204,7 @@ void decrement( int *&hugeInt, int &size ) //ÃD¥Øªº¬A¸¹´î¤@
 // addend += adder
 void addAssign( int *&addend, int *adder, int &addendSize, int adderSize )
 {
-   int sumSize = ( addendSize >= adderSize ) ? addendSize + 1 : adderSize + 1; //¨M©wsumSize
+   int sumSize = ( addendSize >= adderSize ) ? addendSize + 1 : adderSize + 1; //æ±ºå®šsumSize
    int *sum = new int[ sumSize ]();
 
    for( int i = 0; i < addendSize; i++ )
@@ -213,7 +213,7 @@ void addAssign( int *&addend, int *adder, int &addendSize, int adderSize )
    for( int i = 0; i < adderSize; i++ )
       sum[ i ] += adder[ i ];
 
-   for( int i = 0; i < sumSize - 1; i++ ) //¶i¦ì
+   for( int i = 0; i < sumSize - 1; i++ ) //é€²ä½
       if( sum[ i ] > 9 ) // carrying
       {
          sum[ i ] -= 10;
@@ -244,20 +244,20 @@ void subtraAssign( int *&minuend, int *subtrahend, int &minuendSize, int subtrah
    int differenceSize = minuendSize;
    int* difference = new int[differenceSize]();
   
-   //ÃD¥Ø³£²Å¦X ³Q´î¼Æ > ´î¼Æ
-   //¥ı°µ´îªº³¡¤À
+   //é¡Œç›®éƒ½ç¬¦åˆ è¢«æ¸›æ•¸ > æ¸›æ•¸
+   //å…ˆåšæ¸›çš„éƒ¨åˆ†
    for (int i = 0; i < subtrahendSize; i++) //********** i < subtrahendSize
    {
        difference[i] = minuend[i] - subtrahend[i];
    }
-   //¦A§â°ª¦ì¼Æ³Ñ¾lªºminuend¥á¶idifference
+   //å†æŠŠé«˜ä½æ•¸å‰©é¤˜çš„minuendä¸Ÿé€²difference
    for (int i = subtrahendSize; i < differenceSize; i++)
    {
        difference[i] = minuend[i];
    }
    
-   //´î§¹«á¤£°÷­É¤@ªº¾ã²z
-   for (int i = 0; i < differenceSize - 1; i++) //³Ì«á¤@¦ì¤£¥i¯à¬O­tªº¤£ÀË¬d => differenceSize - 1
+   //æ¸›å®Œå¾Œä¸å¤ å€Ÿä¸€çš„æ•´ç†
+   for (int i = 0; i < differenceSize - 1; i++) //æœ€å¾Œä¸€ä½ä¸å¯èƒ½æ˜¯è² çš„ä¸æª¢æŸ¥ => differenceSize - 1
    {
        if (difference[i] < 0) //ex: -2
        {
@@ -265,7 +265,7 @@ void subtraAssign( int *&minuend, int *subtrahend, int &minuendSize, int subtrah
            difference[i + 1] -= 1;
        }
    }
-   //ÀË¬ddifferenceSize¡A³Ì°ª´X¦ì¥i¯à¬O0
+   //æª¢æŸ¥differenceSizeï¼Œæœ€é«˜å¹¾ä½å¯èƒ½æ˜¯0
    for (int i = differenceSize - 1; i >= 0; i--) //********** (int i = size - 1; i >= 0; i--) **********
    {
        if (difference[i] != 0)
@@ -279,8 +279,8 @@ void subtraAssign( int *&minuend, int *subtrahend, int &minuendSize, int subtrah
    if( differenceSize > 1 && difference[ differenceSize - 1 ] == 0 )
       cout << "difference has a leading zero!\n";
 
-   assign( minuend, difference, minuendSize, differenceSize ); // minuend = difference //§âdifference assignµ¹ minuend
-   //§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***
+   assign( minuend, difference, minuendSize, differenceSize ); // minuend = difference //æŠŠdifference assignçµ¦ minuend
+   //åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***
    delete[] difference; 
 }
 
@@ -288,10 +288,10 @@ void subtraAssign( int *&minuend, int *subtrahend, int &minuendSize, int subtrah
 void multiAssign( int *&multiplicand, int *multiplier, int &multiplicandSize, int multiplierSize )
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    int productSize = multiplicandSize + multiplierSize; //³Ì¤j ex:5x4=20 or 5x1=5
+    int productSize = multiplicandSize + multiplierSize; //æœ€å¤§ ex:5x4=20 or 5x1=5
     int* product = new int[productSize]();
 
-    //­¼ªk
+    //ä¹˜æ³•
     for (int i = 0; i < multiplierSize; i++)
     {
         for (int i2 = 0; i2 < multiplicandSize; i2++)
@@ -299,8 +299,8 @@ void multiAssign( int *&multiplicand, int *multiplier, int &multiplicandSize, in
             product[i + i2] += multiplier[i] * multiplicand[i2];
         }
     }
-    //carry¶i¦ì
-    for (int i = 0; i < productSize - 1; i++) //ÀË¬d¨ì«e¤@¦ì productSize-1¡A¦]¬°³Ì°ª¦ì¼Æ¤£¥i¯à¦A©¹¤U¶i¦ì
+    //carryé€²ä½
+    for (int i = 0; i < productSize - 1; i++) //æª¢æŸ¥åˆ°å‰ä¸€ä½ productSize-1ï¼Œå› ç‚ºæœ€é«˜ä½æ•¸ä¸å¯èƒ½å†å¾€ä¸‹é€²ä½
     {
         if (product[i] > 9)
         {
@@ -308,7 +308,7 @@ void multiAssign( int *&multiplicand, int *multiplier, int &multiplicandSize, in
             product[i] %= 10;
         }
     }
-    //ÀË¬dproductSize ¹w³]³Ì¤jex:5x4=20¡A¦ı¦³¥i¯àex:2x2=4
+    //æª¢æŸ¥productSize é è¨­æœ€å¤§ex:5x4=20ï¼Œä½†æœ‰å¯èƒ½ex:2x2=4
     for (int i = productSize - 1; i >= 0; i--)
     {
         if (product[i] != 0)
@@ -325,7 +325,7 @@ void multiAssign( int *&multiplicand, int *multiplier, int &multiplicandSize, in
       cout << "product has a leading zero!\n";
 
    assign( multiplicand, product, multiplicandSize, productSize ); // multiplicand = product
-   //§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***
+   //åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***
    delete[] product;
 }
 
@@ -336,52 +336,52 @@ void division( int *dividend, int *divisor, int *&quotient, int *&remainder,
    assign( remainder, dividend, remainderSize, dividendSize ); // remainder = dividend
 
    if( less( dividend, divisor, dividendSize, divisorSize ) )
-      reset( quotient, quotientSize ); //µª®×ª½±µ¬°0
+      reset( quotient, quotientSize ); //ç­”æ¡ˆç›´æ¥ç‚º0
    else
    {
       int bufferSize = dividendSize;
       int *buffer = new int[ bufferSize ]();
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //°£¼Æ¸É0¥[¨ìbuffer:
-      int n = dividendSize - divisorSize; //®t¤Fn®æ¡A­n¸Én­Ó0 
-      for (int i = divisorSize - 1; i >= 0; i--) //±qdivisorªº³Ì°ª¦ì¸Én­Ó0¥á¨ìbuffer¡A¥H¦¹Ãş±À  p.s.buffer­ì¥»¥ş¬°0
+      //é™¤æ•¸è£œ0åŠ åˆ°buffer:
+      int n = dividendSize - divisorSize; //å·®äº†næ ¼ï¼Œè¦è£œnå€‹0 
+      for (int i = divisorSize - 1; i >= 0; i--) //å¾divisorçš„æœ€é«˜ä½è£œnå€‹0ä¸Ÿåˆ°bufferï¼Œä»¥æ­¤é¡æ¨  p.s.bufferåŸæœ¬å…¨ç‚º0
       {
           buffer[i + n] = divisor[i]; 
       }     
 
-      //ÀË¬dbuffer¦³¨S¦³¤Ó¤j¡A¥H¤ÎÀË¬dquotientSize:
-      quotientSize = dividendSize - divisorSize; //¹w³]³Ì¤pex:20/5=4¡A¦ı¥i¯àex:50/5=10
-      if (less(dividend, buffer, dividendSize, bufferSize)) //dividend < buffer (¸É¹L0ªºbuffer³Ì°ª¦ì > dividend³Ì°ª¦ì)
+      //æª¢æŸ¥bufferæœ‰æ²’æœ‰å¤ªå¤§ï¼Œä»¥åŠæª¢æŸ¥quotientSize:
+      quotientSize = dividendSize - divisorSize; //é è¨­æœ€å°ex:20/5=4ï¼Œä½†å¯èƒ½ex:50/5=10
+      if (less(dividend, buffer, dividendSize, bufferSize)) //dividend < buffer (è£œé0çš„bufferæœ€é«˜ä½ > dividendæœ€é«˜ä½)
       {
           divideBy10(buffer, bufferSize);
       }
-      else //buffer <= dividend ex:50/5=10 => ¹ê»Úªºsize¬°2
+      else //buffer <= dividend ex:50/5=10 => å¯¦éš›çš„sizeç‚º2
       {
           quotientSize++; 
       }
 
       //quotient = 0 : 
-      delete[] quotient; //¦]¬°quotient«üªºªÅ¶¡­n¦^¶Ç¦^¥h¡A©Ò¥H¤£¯à¦b¥~­±§R±¼¡A¥u¯àµ¥¨ì¤U¤@¦¸­n­«ºâªº®É­Ô¤~Âk0
+      delete[] quotient; //å› ç‚ºquotientæŒ‡çš„ç©ºé–“è¦å›å‚³å›å»ï¼Œæ‰€ä»¥ä¸èƒ½åœ¨å¤–é¢åˆªæ‰ï¼Œåªèƒ½ç­‰åˆ°ä¸‹ä¸€æ¬¡è¦é‡ç®—çš„æ™‚å€™æ‰æ­¸0
       quotient = new int[quotientSize]();
       
-      //°£ªk­pºâquotient:
-      //¥Î¾l¼Æ¤@ª½´îbuffer¡A¨Ã²Ö¥[quotient«ü¨ì¦ì¸mªº­È¡Aª½¨ìremainder < buffer ©Î remainder³Ñ0 µ²§ô
-      for (int k = quotientSize - 1; k >= 0; k--) //k¬°quotient«ü¨ìªº¦ì¸m(·í«e­pºâ°Óªº¦ì¸m)
+      //é™¤æ³•è¨ˆç®—quotient:
+      //ç”¨é¤˜æ•¸ä¸€ç›´æ¸›bufferï¼Œä¸¦ç´¯åŠ quotientæŒ‡åˆ°ä½ç½®çš„å€¼ï¼Œç›´åˆ°remainder < buffer æˆ– remainderå‰©0 çµæŸ
+      for (int k = quotientSize - 1; k >= 0; k--) //kç‚ºquotientæŒ‡åˆ°çš„ä½ç½®(ç•¶å‰è¨ˆç®—å•†çš„ä½ç½®)
       {
-          while (!less(remainder, buffer, remainderSize, bufferSize)) //¤£­n¬O remainder < buffer«h°õ¦æ
+          while (!less(remainder, buffer, remainderSize, bufferSize)) //ä¸è¦æ˜¯ remainder < bufferå‰‡åŸ·è¡Œ
           {
               subtraAssign(remainder, buffer, remainderSize, bufferSize);
               quotient[k]++;
-              if (isZero(remainder, remainderSize)) //remainder³Ñ0 µ²§ô
+              if (isZero(remainder, remainderSize)) //remainderå‰©0 çµæŸ
               {
                   return;
               }
           }
-          divideBy10(buffer, bufferSize); //­pºâ§¹¤@­Ó°Ó«á¡Abuffer¤Ö¤@­Ó0
+          divideBy10(buffer, bufferSize); //è¨ˆç®—å®Œä¸€å€‹å•†å¾Œï¼Œbufferå°‘ä¸€å€‹0
       }
       
-      //***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡***§RªÅ¶¡
+      //***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“***åˆªç©ºé–“
       delete[] buffer;
       /////////////////////////////////////////////////////////////////////////////////////////////////////////
    }
@@ -417,7 +417,7 @@ void assign( int *&hugeInt1, int *hugeInt2, int &size1, int size2 )
       hugeInt1[ i ] = hugeInt2[ i ];
 }
 
-void reset( int *&hugeInt, int &size ) //§â¼Æ¦rÅÜ0
+void reset( int *&hugeInt, int &size ) //æŠŠæ•¸å­—è®Š0
 {
    size = 1;
    delete[] hugeInt;
